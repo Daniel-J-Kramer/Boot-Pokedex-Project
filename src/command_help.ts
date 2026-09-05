@@ -1,12 +1,12 @@
-import { getCommands } from "./command_registry.js";
+import { State } from "./state.js";
 
-export function commandHelp() {
+export function commandHelp(state: State) {
     console.log("Welcome to the Pokedex!");
     console.log("Usage:");
     console.log("");
-    const cmdList = getCommands();
+    const cmdList = state.cmdRegistry;
     for (let cmd in cmdList) {
-        let print = getCommands()[cmd];
+        let print = state.cmdRegistry[cmd];
         console.log(`${print.name}: ${print.description}`);
     }
 }

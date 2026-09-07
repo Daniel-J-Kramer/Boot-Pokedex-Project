@@ -10,19 +10,22 @@ export function cleanInput(input: string): string[] {
 export function startREPL(state: State) {
     
     state.readLine.prompt();
-    state.readLine.on("line", (line: string) => {
+    state.readLine.on("line", async (line: string) => {
         let result = cleanInput(line);
-        if (result.length == 0) {
-        state.readLine.prompt()
+
+        let cmd: CLICommand = state.cmdRegistry[result[0]];
+        if (!cmd){
+            console.log("Unknown command");
         } else {
-            let cmd: CLICommand = state.cmdRegistry[result[0]];
             try {
-                cmd.callback(state);
+                await cmd.callback(state);
             } catch(error) {
                 if (error instanceof Error) {
-                    console.log(`Unknown command`);
+                    
+                    console.log(error.message);
                 }
             }
-            state.readLine.prompt()
-    }});
+        }
+        state.readLine.prompt()
+    });
 }

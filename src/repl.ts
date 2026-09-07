@@ -18,7 +18,7 @@ export function startREPL(state: State) {
             console.log("Unknown command");
         } else {
             try {
-                await cmd.callback(state);
+                await cmd.callback(state, result[1]);
             } catch(error) {
                 if (error instanceof Error) {
                     

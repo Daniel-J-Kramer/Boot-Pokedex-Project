@@ -16,7 +16,6 @@ export class PokeAPI {
         }
         
         const cachedResponse: ShallowLocations | undefined = this.cache.get<ShallowLocations>(url);
-        console.log(cachedResponse);
         if (cachedResponse != undefined) {
             return cachedResponse;
         } else {
